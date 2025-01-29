@@ -1,6 +1,10 @@
-const express = require('express');
+import express from 'express';
+import { readFile } from 'fs/promises';
+
 const router = express.Router();
-const packageJson = require('../../package.json');
+const packageJson = JSON.parse(
+  await readFile(new URL('../../package.json', import.meta.url))
+);
 
 router.get('/', (req, res) => {
   res.json({
@@ -9,4 +13,4 @@ router.get('/', (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

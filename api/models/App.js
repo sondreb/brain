@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const AppSchema = new mongoose.Schema({
   name: {
@@ -12,7 +12,11 @@ const AppSchema = new mongoose.Schema({
   version: {
     type: String,
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 
-module.exports = mongoose.model('App', AppSchema);
+export default mongoose.model('App', AppSchema);
