@@ -30,8 +30,6 @@ app.use('/version', versionRoutes);
 app.use('/apps', appRoutes);
 app.use('/users', userRoutes);
 
-console.log(__dirname);
-
 app.use("/", express.static(path.join(__dirname, "app", "browser")));
 
 app.listen(port, () => {
