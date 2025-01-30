@@ -1,4 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,6 +46,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
       >
         <mat-sidenav
           #snav
+          opened="true"
           [mode]="isMobile() ? 'over' : 'side'"
           [fixedInViewport]="isMobile()"
           fixedTopGap="56"
@@ -49,50 +56,68 @@ import { MediaMatcher } from '@angular/cdk/layout';
           <mat-nav-list>
             <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) {
-               Apps
-              }
-            </a> <a mat-list-item>
+              @if(isExpanded()) { Apps }
+            </a>
+            <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) {
-               Apps
-              }
-            </a> <a mat-list-item>
+              @if(isExpanded()) { Apps }
+            </a>
+            <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) {
-               Apps
-              }
-            </a> <a mat-list-item>
+              @if(isExpanded()) { Apps }
+            </a>
+            <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) {
-               Apps
-              }
-            </a> <a mat-list-item>
+              @if(isExpanded()) { Apps }
+            </a>
+            <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) {
-               Apps
-              }
-            </a> <a mat-list-item>
+              @if(isExpanded()) { Apps }
+            </a>
+            <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) {
-               Apps
-              }
-            </a> <a mat-list-item>
+              @if(isExpanded()) { Apps }
+            </a>
+            <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) {
-               Apps
-              }
+              @if(isExpanded()) { Apps }
             </a>
             <a mat-list-item (click)="minimize()">
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) {
-              Minimize
-              }
+              @if(isExpanded()) { Minimize }
             </a>
           </mat-nav-list>
         </mat-sidenav>
 
         <mat-sidenav-content>
+          <!-- <ngx-simplebar style="height: 50px;">
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+          </ngx-simplebar>
+
+          <div
+            class="scrollbar-container"
+            id="scroll-container"
+            style="height: 50px;"
+          >
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+            <div>ngx-simplebar</div>
+          </div> -->
+
           <p>asdfas dfasdfasdf</p>
           <p>asdfas dfasdfasdf</p>
           <p>asdfas dfasdfasdf</p>
@@ -221,31 +246,49 @@ mat-sidenav.collapsed {
 width: 54px;
 }
 
-mat-sidenav {
-  overflow-y: overlay;
 
-  /* Firefox */
-  scrollbar-width: thin;
-  // scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+
+//  .mat-sidenav {
+//   scrollbar-width: thin;
+//   scrollbar-color: yellow transparent;
+// }
+
+// .mat-drawer-inner-container {
+//   overflow-y: auto;
+//   scrollbar-width: thin; /* Firefox */
+//   scrollbar-color: red transparent; /* Firefox */
+// }
+
+.mat-sidenav {
+
 }
 
-mat-sidenav::-webkit-scrollbar {
-  width: 6px;
-  // background-color: transparent;
+.mat-drawer-inner-container {
+
 }
 
-mat-sidenav::-webkit-scrollbar-track {
-  // background-color: transparent;
-}
+// .mat-drawer-inner-container {
+//   /* Standard scrollbar properties */
+//   scrollbar-width: thin;
+//   scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
 
-mat-sidenav::-webkit-scrollbar-thumb {
-  // background-color: rgba(0, 0, 0, 0.2);
-  // border-radius: 3px;
-}
+//   /* Webkit scrollbar properties */
+// }
 
-mat-sidenav::-webkit-scrollbar-thumb:hover {
-  // background-color: rgba(0, 0, 0, 0.3);
-}
+// .mat-drawer-inner-container::-webkit-scrollbar {
+//   width: 3px;
+// }
+
+// .mat-drawer-inner-container::-webkit-scrollbar-track {
+//   background: transparent;
+// }
+
+// .mat-drawer-inner-container::-webkit-scrollbar-thumb {
+//   background: rgba(128, 128, 128, 0.5);
+//   border-radius: 3px;
+// }
+
 
     
   `,
@@ -261,11 +304,58 @@ export class AppComponent {
   constructor() {
     const media = inject(MediaMatcher);
 
-    this._mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQuery = media.matchMedia('(max-width: 200px)');
     this.isMobile.set(this._mobileQuery.matches);
     this._mobileQueryListener = () =>
       this.isMobile.set(this._mobileQuery.matches);
     this._mobileQuery.addEventListener('change', this._mobileQueryListener);
+  }
+
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
+  ngOnInit() {
+    // const element: any = document.querySelector('mat-sidenav');
+    // console.log(element);
+    // const osInstance = OverlayScrollbars(element, {});
+    // console.log(osInstance);
+    // const element2: any = document.querySelector('mat-sidenav-content');
+    // console.log(element2);
+    // const osInstance2 = OverlayScrollbars(element2, {});
+    // console.log(osInstance2);
+    // const element2: any = document.querySelector('.mat-sidenav');
+    // console.log(element2);
+    // new SimpleBar(element2, { autoHide: false });
+  }
+
+  ngAfterViewInit() {
+    // const element: any = document.querySelector('.scrollbar-container');
+    // console.log(element);
+    // new SimpleBar(element, { autoHide: false });
+    // const elm: any = document.getElementById('scroll-container');
+    // const osInstance = OverlayScrollbars(elm, {
+    //   scrollbars: { autoHide: 'move' }
+    // });
+    // const elm2: any = document.querySelector('mat-sidenav-content');
+    // console.log('Check this:', elm2);
+    // const osInstance2 = OverlayScrollbars(elm2, {
+    //   scrollbars: { autoHide: 'move' }
+    // });
+    // const elm3: any = document.querySelector('mat-sidenav');
+    // console.log('Check this:', elm3);
+    // const osInstance3 = OverlayScrollbars(elm3, {
+    //   scrollbars: { autoHide: 'move' }
+    // });
+    // console.log(elm);
+    // console.log(elm2);
+    // console.log(elm3);
+    // const elm: any = document.getElementById('scroll-container');
+    // console.log(elm);
+    // new SimpleBar(elm, { autoHide: false });
+    // console.log(this.scrollContainer);
+    // Access the native DOM element
+    // const element2 = this.scrollContainer.nativeElement;
+    // Apply your third party plugin here
+    // example: new ThirdPartyPlugin(element);
   }
 
   ngOnDestroy(): void {

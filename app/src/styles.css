@@ -1,4 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  overscroll-behavior: none;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* * {
+  scrollbar-width: thin;
+  scrollbar-color: pink transparent;
+  scrollbar-gutter: auto;
+  overflow: overlay;
+} */
+
+/* @media (pointer: fine) {
+  ::-webkit-scrollbar {
+    background-color: transparent;
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: green;
+    border-radius: 4px;
+  }
+} */
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 6px;
+}
+
+:hover::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mat-drawer-inner-container::-webkit-scrollbar {
+  width: 0px;
+}
+
+.mat-drawer-inner-container:hover::-webkit-scrollbar {
+  width: 6px;
+}
