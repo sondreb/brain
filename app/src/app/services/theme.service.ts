@@ -11,6 +11,10 @@ export class ThemeService {
     this.setTheme(this.getThemeFromLocalStorage());
   }
 
+  isDark() {
+    return this.document.documentElement.classList.contains('dark-mode');
+  }
+
   toggle() {
     this.setTheme(
       this.document.documentElement.classList.contains('dark-mode')

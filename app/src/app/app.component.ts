@@ -38,6 +38,15 @@ import { ThemeService } from './services/theme.service';
           <mat-icon>menu</mat-icon>
         </button>
         <h1 class="example-app-name">Responsive App</h1>
+        <div class="spacer"></div>
+
+        <button mat-icon-button (click)="theme.toggle()">
+          @if (theme.isDark()) {
+          <mat-icon>dark_mode</mat-icon>
+          } @else {
+          <mat-icon>light_mode</mat-icon>
+          }
+        </button>
       </mat-toolbar>
 
       <mat-sidenav-container
@@ -91,13 +100,9 @@ import { ThemeService } from './services/theme.service';
         </mat-sidenav>
 
         <mat-sidenav-content>
-
-
-<p>
-
-  <button mat-flat-button>Flat button</button>
-
-</p>
+          <p>
+            <button mat-flat-button>Flat button</button>
+          </p>
 
           <!-- <ngx-simplebar style="height: 50px;">
             <div>ngx-simplebar</div>
