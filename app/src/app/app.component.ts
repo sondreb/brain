@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from './services/theme.service';
+import { LayoutService } from './services/layout.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +32,7 @@ import { ThemeService } from './services/theme.service';
     MatListModule,
     MatInputModule,
     MatFormFieldModule,
+    FormsModule,
   ],
   template: `
     <div class="example-container" [class.example-is-mobile]="isMobile()">
@@ -38,7 +41,28 @@ import { ThemeService } from './services/theme.service';
           <mat-icon>menu</mat-icon>
         </button>
         <h1 class="example-app-name">Responsive App</h1>
-        <div class="spacer"></div>
+        <!-- <div class="spacer"></div> -->
+
+        <span class="spacer">
+        @if (layout.search()) {
+        <input type="search" class="search-input" [(ngModel)]="layout.searchInput" (input)="onSearchInput($event)" />
+        } @else {
+
+        }
+
+        <!-- <mat-form-field class="small-search-input" subscriptSizing="dynamic">
+          <input type="search" matInput placeholder="Search" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field> -->
+      </span>
+
+        <button mat-icon-button (click)="layout.toggleSearch()">
+          @if (layout.search()) {
+          <mat-icon>close</mat-icon>
+          } @else {
+          <mat-icon>search</mat-icon>
+          }
+        </button>
 
         <button mat-icon-button (click)="theme.toggle()">
           @if (theme.isDark()) {
@@ -131,6 +155,15 @@ import { ThemeService } from './services/theme.service';
             <div>ngx-simplebar</div>
             <div>ngx-simplebar</div>
           </div> -->
+
+          <form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Message</mat-label>
+    <input matInput #message maxlength="256" placeholder="Ex. I need help with...">
+    <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
+    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+  </mat-form-field>
+</form>
 
           <p>asdfas dfasdfasdf</p>
           <p>asdfas dfasdfasdf</p>
@@ -313,6 +346,7 @@ export class AppComponent {
   protected readonly isMobile = signal(true);
 
   theme = inject(ThemeService);
+  layout = inject(LayoutService);
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
@@ -328,6 +362,32 @@ export class AppComponent {
   }
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
+  onSearchInput(event: any) {
+    // if (event.target.value === null) {
+    //   clearTimeout(this.debounceTimer);
+    //   return;
+    // }
+
+    // // Debounce logic to wait until user finishes typing
+    // clearTimeout(this.debounceTimer);
+    // this.debounceTimer = setTimeout(() => {
+    //   console.log('Handle search called!');
+    //   this.handleSearch(event.target.value);
+    // }, 750);
+  }
+
+  // private handleSearch(value: string): void {
+  //   if (!value) {
+  //     return;
+  //   }
+
+  //   if (value.includes(':')) {
+  //     this.router.navigate(['/profile', value]);
+  //   } else {
+  //     this.router.navigate(['/search'], { queryParams: { query: value } });
+  //   }
+  // }
 
   ngOnInit() {
     // const element: any = document.querySelector('mat-sidenav');

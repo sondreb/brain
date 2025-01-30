@@ -50,3 +50,13 @@ body {
 .mat-drawer-inner-container:hover::-webkit-scrollbar {
   width: 6px;
 }
+
+.search-input {
+  background-color: var(--mat-app-background-color);
+  color: var(--mat-app-text-color);
+  // border: 1px solid var(--mat-app-text-color);
+  border: 1px solid var(--mat-sidenav-content-text-color, var(--mat-sys-on-background));
+  border-radius: 20px;
+  padding: 0.8em 1.2em;
+  width: 100%;
+}
