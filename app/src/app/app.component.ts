@@ -44,17 +44,20 @@ import { FormsModule } from '@angular/forms';
         <!-- <div class="spacer"></div> -->
 
         <span class="spacer">
-        @if (layout.search()) {
-        <input type="search" class="search-input" [(ngModel)]="layout.searchInput" (input)="onSearchInput($event)" />
-        } @else {
+          @if (layout.search()) {
+          <input
+            type="search"
+            class="search-input"
+            [(ngModel)]="layout.searchInput"
+            (input)="onSearchInput($event)"
+          />
+          } @else { }
 
-        }
-
-        <!-- <mat-form-field class="small-search-input" subscriptSizing="dynamic">
+          <!-- <mat-form-field class="small-search-input" subscriptSizing="dynamic">
           <input type="search" matInput placeholder="Search" />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field> -->
-      </span>
+        </span>
 
         <button mat-icon-button (click)="layout.toggleSearch()">
           @if (layout.search()) {
@@ -117,8 +120,10 @@ import { FormsModule } from '@angular/forms';
               @if(isExpanded()) { Apps }
             </a>
             <a mat-list-item (click)="minimize()">
-              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) { Minimize }
+              @if(isExpanded()) {
+              <mat-icon matListItemIcon>chevron_left</mat-icon>} @else {
+              <mat-icon matListItemIcon>chevron_right</mat-icon>
+              }
             </a>
           </mat-nav-list>
         </mat-sidenav>
@@ -157,13 +162,20 @@ import { FormsModule } from '@angular/forms';
           </div> -->
 
           <form class="example-form">
-  <mat-form-field class="example-full-width">
-    <mat-label>Message</mat-label>
-    <input matInput #message maxlength="256" placeholder="Ex. I need help with...">
-    <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
-    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
-  </mat-form-field>
-</form>
+            <mat-form-field class="example-full-width">
+              <mat-label>Message</mat-label>
+              <input
+                matInput
+                #message
+                maxlength="256"
+                placeholder="Ex. I need help with..."
+              />
+              <mat-hint align="start"
+                ><strong>Don't disclose personal info</strong>
+              </mat-hint>
+              <mat-hint align="end">{{ message.value.length }} / 256</mat-hint>
+            </mat-form-field>
+          </form>
 
           <p>asdfas dfasdfasdf</p>
           <p>asdfas dfasdfasdf</p>
@@ -368,7 +380,6 @@ export class AppComponent {
     //   clearTimeout(this.debounceTimer);
     //   return;
     // }
-
     // // Debounce logic to wait until user finishes typing
     // clearTimeout(this.debounceTimer);
     // this.debounceTimer = setTimeout(() => {
