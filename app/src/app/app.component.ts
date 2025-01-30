@@ -91,9 +91,14 @@ import { FormsModule } from '@angular/forms';
           [class.collapsed]="!isExpanded()"
         >
           <mat-nav-list>
+
             <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) { Apps }
+              @if(isExpanded()) { 
+
+                {{ isMobile()}}
+
+               }
             </a>
             <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
@@ -305,7 +310,11 @@ mat-sidenav.collapsed {
 width: 54px;
 }
 
-
+mat-sidenav.expanded {
+   width: 250px;
+  //  min-width: 250px;
+  //  max-width: 250px;
+ }
 
 
 //  .mat-sidenav {
@@ -366,7 +375,8 @@ export class AppComponent {
   constructor() {
     const media = inject(MediaMatcher);
 
-    this._mobileQuery = media.matchMedia('(max-width: 200px)');
+    this._mobileQuery = media.matchMedia('(max-width: 600px)');
+
     this.isMobile.set(this._mobileQuery.matches);
     this._mobileQueryListener = () =>
       this.isMobile.set(this._mobileQuery.matches);
