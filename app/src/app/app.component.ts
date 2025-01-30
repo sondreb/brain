@@ -17,6 +17,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from './services/theme.service';
 import { LayoutService } from './services/layout.service';
 import { FormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
+    MatMenuModule,
   ],
   template: `
     <div class="example-container" [class.example-is-mobile]="isMobile()">
@@ -40,7 +42,7 @@ import { FormsModule } from '@angular/forms';
         <button mat-icon-button (click)="snav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
-        <h1 class="example-app-name">Responsive App</h1>
+        <h1 class="example-app-name">Brain App</h1>
         <!-- <div class="spacer"></div> -->
 
         <span class="spacer">
@@ -74,6 +76,96 @@ import { FormsModule } from '@angular/forms';
           <mat-icon>light_mode</mat-icon>
           }
         </button>
+
+        <button mat-icon-button [matMenuTriggerFor]="profilemenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+
+        <mat-menu #profilemenu="matMenu">
+          <button  (click)="theme.toggle()" mat-menu-item>
+            @if (theme.isDark()) {
+            <mat-icon>dark_mode</mat-icon>
+            } @else {
+            <mat-icon>light_mode</mat-icon>
+            }
+            <span>
+            @if (theme.isDark()) {
+            Dark Mode
+            } @else {
+            Light Mode
+            }
+            </span>
+          </button>
+
+          <button mat-menu-item [matMenuTriggerFor]="menuMode">
+          @if (theme.isDark()) {
+            <mat-icon>dark_mode</mat-icon>
+            } @else {
+            <mat-icon>light_mode</mat-icon>
+            }
+            <span>Theme</span>
+          </button>
+
+          <mat-divider></mat-divider>
+          <button mat-menu-item [matMenuTriggerFor]="menuLanguages">
+            <mat-icon>translate</mat-icon>
+            <span>Language: English</span>
+          </button>
+          <mat-divider></mat-divider>
+
+          <button
+            class="notification-menu"
+            [routerLink]="['/notifications']"
+            mat-menu-item
+          >
+            <mat-icon>notifications</mat-icon>
+            <span>Notifications</span>
+          </button>
+
+          <button [routerLink]="['/settings']" mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+
+          <mat-divider></mat-divider>
+          <a href="https://help.ariton.app" target="_blank" mat-menu-item>
+            <mat-icon>help</mat-icon>
+            <span>Help</span>
+          </a>
+        </mat-menu>
+
+        <mat-menu #menuLanguages="matMenu">
+          <button mat-menu-item>
+            <span>English</span>
+          </button>
+          <button mat-menu-item [disabled]="true">
+            <span>Norwegian</span>
+          </button>
+          <button mat-menu-item [disabled]="true">
+            <span>Serbian</span>
+          </button>
+          <button mat-menu-item [disabled]="true">
+            <span>Russian</span>
+          </button>
+          <button mat-menu-item [disabled]="true">
+            <span>German</span>
+          </button>
+        </mat-menu>
+
+        <mat-menu #menuMode="matMenu">
+          <button mat-menu-item (click)="theme.setTheme('auto')" [disabled]="theme.theme() == 'auto'">
+            <mat-icon>contrast</mat-icon>
+            <span>Auto</span>
+          </button>
+          <button mat-menu-item (click)="theme.setTheme('dark')" [disabled]="theme.theme() == 'dark'">
+          <mat-icon>dark_mode</mat-icon>
+            <span>Dark</span>
+          </button>
+          <button mat-menu-item (click)="theme.setTheme('light')" [disabled]="theme.theme() == 'light'">
+          <mat-icon>light_mode</mat-icon>
+            <span>Light</span>
+          </button>
+        </mat-menu>
       </mat-toolbar>
 
       <mat-sidenav-container
@@ -91,22 +183,21 @@ import { FormsModule } from '@angular/forms';
           [class.collapsed]="!isExpanded()"
         >
           <mat-nav-list>
-
             <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) { 
+              @if(isExpanded()) {
 
-                {{ isMobile()}}
+              {{ isMobile() }}
 
-               }
+              }
             </a>
             <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
               @if(isExpanded()) { Apps }
             </a>
             <a mat-list-item>
-              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) { Apps }
+              <mat-icon matListItemIcon>manage_accounts</mat-icon>
+              @if(isExpanded()) { Users }
             </a>
             <a mat-list-item>
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>

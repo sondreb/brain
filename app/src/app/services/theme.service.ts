@@ -1,14 +1,15 @@
 import { DOCUMENT } from '@angular/common';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 
 export type Theme = 'light' | 'dark' | 'auto';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   private readonly document = inject(DOCUMENT);
+  theme = signal<Theme>('auto');
 
   constructor() {
-    this.setTheme(this.getThemeFromLocalStorage());
+    this.updateTheme(this.getThemeFromLocalStorage());
   }
 
   isDark() {
@@ -25,9 +26,19 @@ export class ThemeService {
 
   setTheme(theme: Theme) {
     this.setThemeInLocalStorage(theme);
+    this.updateTheme(theme);
+  }
 
-    console.log('Setting theme: ', theme);
-    if (theme == 'dark') {
+  updateTheme(theme: Theme) {
+    this.theme.set(theme);
+
+    let activeTheme = theme;
+
+    if (activeTheme == 'auto') {
+      activeTheme = this.getBrowserPreferredTheme();
+    }
+
+    if (activeTheme == 'dark') {
       this.document.documentElement.classList.add('dark-mode');
     } else {
       this.document.documentElement.classList.remove('dark-mode');
@@ -40,15 +51,10 @@ export class ThemeService {
 
   getThemeFromLocalStorage(): Theme {
     const storedTheme = localStorage.getItem('preferred-theme');
+    return (storedTheme as Theme) ?? 'auto';
+  }
 
-    console.log('storedTheme:', storedTheme);
-
-    if (storedTheme && storedTheme !== 'auto') {
-      return storedTheme as Theme;
-    }
-
-    console.log(window.matchMedia('(prefers-color-scheme: dark)').matches);
-
+  getBrowserPreferredTheme() {
     // Check browser preference
     if (
       window.matchMedia &&
@@ -56,6 +62,7 @@ export class ThemeService {
     ) {
       return 'dark';
     }
+
     return 'light';
   }
 }
