@@ -14,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -78,8 +79,8 @@ import { MediaMatcher } from '@angular/cdk/layout';
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
               @if(isExpanded()) { Apps }
             </a>
-            <a mat-list-item>
-              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
+            <a mat-list-item (click)="theme.toggle()">
+              <mat-icon matListItemIcon>home</mat-icon>
               @if(isExpanded()) { Apps }
             </a>
             <a mat-list-item (click)="minimize()">
@@ -90,6 +91,14 @@ import { MediaMatcher } from '@angular/cdk/layout';
         </mat-sidenav>
 
         <mat-sidenav-content>
+
+
+<p>
+
+  <button mat-flat-button>Flat button</button>
+
+</p>
+
           <!-- <ngx-simplebar style="height: 50px;">
             <div>ngx-simplebar</div>
             <div>ngx-simplebar</div>
@@ -297,6 +306,8 @@ export class AppComponent {
   title = 'app';
 
   protected readonly isMobile = signal(true);
+
+  theme = inject(ThemeService);
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;

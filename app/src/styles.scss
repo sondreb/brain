@@ -1,3 +1,23 @@
+@use "@angular/material" as mat;
+
+html {
+  color-scheme: light;
+  @include mat.theme((
+    color: mat.$blue-palette,
+    typography: Roboto,
+    density: 0
+  ));
+}
+
+html.dark-mode {
+  color-scheme: dark;
+  // @include mat.theme((
+  //   color: mat.$red-palette,
+  //   typography: Roboto,
+  //   density: 0
+  // ));
+}
+
 html,
 body {
   height: 100%;
@@ -8,25 +28,6 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
-/* * {
-  scrollbar-width: thin;
-  scrollbar-color: pink transparent;
-  scrollbar-gutter: auto;
-  overflow: overlay;
-} */
-
-/* @media (pointer: fine) {
-  ::-webkit-scrollbar {
-    background-color: transparent;
-    width: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: green;
-    border-radius: 4px;
-  }
-} */
 
 ::-webkit-scrollbar {
   background-color: transparent;
