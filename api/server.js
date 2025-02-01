@@ -25,12 +25,25 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('MongoDB connected'))
 .catch((err) => console.log(err));
 
-app.use('/auth', authRoutes);
-app.use('/version', versionRoutes);
-app.use('/apps', appRoutes);
-app.use('/users', userRoutes);
+// API routes
+app.use('/api/auth', authRoutes);
+app.use('/api/version', versionRoutes);
+app.use('/api/apps', appRoutes);
+app.use('/api/users', userRoutes);
 
-app.use("/", express.static(path.join(__dirname, "app", "browser")));
+// Serve static files
+app.use(express.static(path.join(__dirname, "app", "browser")));
+
+// Catch-all route for PWA - must be after API routes and static files
+app.get('*', (req, res) => {
+  // Don't handle API routes here
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).send('API endpoint not found');
+  }
+  
+  // Send the index.html for all other routes
+  res.sendFile(path.join(__dirname, 'app', 'browser', 'index.html'));
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

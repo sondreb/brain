@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -13,27 +13,27 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
       <p>Logging out...</p>
     </div>
   `,
-  styles: [`
-    .logout-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      gap: 1rem;
-    }
-  `]
+  styles: [
+    `
+      .logout-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        gap: 1rem;
+      }
+    `,
+  ],
 })
 export class LogoutComponent implements OnInit {
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  authService = inject(AuthService);
+  router = inject(Router);
 
-  ngOnInit() {
-    this.authService.logout().subscribe({
-      next: () => this.router.navigate(['/login']),
-      error: () => this.router.navigate(['/login'])
-    });
+  constructor() {}
+
+  async ngOnInit() {
+    await this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
