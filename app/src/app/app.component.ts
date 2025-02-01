@@ -82,7 +82,7 @@ import { MatMenuModule } from '@angular/material/menu';
         </button>
 
         <mat-menu #profilemenu="matMenu">
-          <button  (click)="theme.toggle()" mat-menu-item>
+          <!-- <button  (click)="theme.toggle()" mat-menu-item>
             @if (theme.isDark()) {
             <mat-icon>dark_mode</mat-icon>
             } @else {
@@ -95,7 +95,7 @@ import { MatMenuModule } from '@angular/material/menu';
             Light Mode
             }
             </span>
-          </button>
+          </button> -->
 
           <button mat-menu-item [matMenuTriggerFor]="menuMode">
           @if (theme.isDark()) {
@@ -183,19 +183,11 @@ import { MatMenuModule } from '@angular/material/menu';
           [class.collapsed]="!isExpanded()"
         >
           <mat-nav-list>
-            <a mat-list-item>
-              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              @if(isExpanded()) {
-
-              {{ isMobile() }}
-
-              }
-            </a>
-            <a mat-list-item>
-              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
+            <a mat-list-item routerLink="apps">
+              <mat-icon matListItemIcon>apps</mat-icon>
               @if(isExpanded()) { Apps }
             </a>
-            <a mat-list-item>
+            <a mat-list-item routerLink="users">
               <mat-icon matListItemIcon>manage_accounts</mat-icon>
               @if(isExpanded()) { Users }
             </a>
