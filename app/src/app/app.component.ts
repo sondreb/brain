@@ -132,6 +132,11 @@ import { MatMenuModule } from '@angular/material/menu';
             <mat-icon>help</mat-icon>
             <span>Help</span>
           </a>
+          <mat-divider></mat-divider>
+          <a routerLink="logout" target="_blank" mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </a>
         </mat-menu>
 
         <mat-menu #menuLanguages="matMenu">
@@ -217,66 +222,7 @@ import { MatMenuModule } from '@angular/material/menu';
         </mat-sidenav>
 
         <mat-sidenav-content>
-          <p>
-            <button mat-flat-button>Flat button</button>
-          </p>
-
-          <!-- <ngx-simplebar style="height: 50px;">
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-          </ngx-simplebar>
-
-          <div
-            class="scrollbar-container"
-            id="scroll-container"
-            style="height: 50px;"
-          >
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-            <div>ngx-simplebar</div>
-          </div> -->
-
-          <form class="example-form">
-            <mat-form-field class="example-full-width">
-              <mat-label>Message</mat-label>
-              <input
-                matInput
-                #message
-                maxlength="256"
-                placeholder="Ex. I need help with..."
-              />
-              <mat-hint align="start"
-                ><strong>Don't disclose personal info</strong>
-              </mat-hint>
-              <mat-hint align="end">{{ message.value.length }} / 256</mat-hint>
-            </mat-form-field>
-          </form>
-
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
-          <p>asdfas dfasdfasdf</p>
+        <router-outlet />
         </mat-sidenav-content>
       </mat-sidenav-container>
     </div>
