@@ -128,12 +128,12 @@ import { MatMenuModule } from '@angular/material/menu';
           </button>
 
           <mat-divider></mat-divider>
-          <a href="https://help.ariton.app" target="_blank" mat-menu-item>
+          <a href="https://help.brain.no" target="_blank" mat-menu-item>
             <mat-icon>help</mat-icon>
             <span>Help</span>
           </a>
           <mat-divider></mat-divider>
-          <a routerLink="logout" target="_blank" mat-menu-item>
+          <a [routerLink]="['/logout']" mat-menu-item>
             <mat-icon>logout</mat-icon>
             <span>Logout</span>
           </a>
