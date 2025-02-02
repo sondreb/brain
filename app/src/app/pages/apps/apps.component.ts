@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
@@ -75,7 +75,7 @@ import { AppFormDialogComponent } from '../../components/app-form-dialog.compone
   `
 })
 export class AppsComponent implements OnInit {
-  apps: App[] = [];
+  apps = new MatTableDataSource<App>([]);
   displayedColumns = ['name', 'description', 'actions'];
 
   constructor(
@@ -89,8 +89,9 @@ export class AppsComponent implements OnInit {
 
   private async loadApps() {
     try {
-      this.apps = await this.apiService.getApps();
-      console.log('Loaded apps:', this.apps);
+      const appsData = await this.apiService.getApps();
+      this.apps.data = appsData;
+      console.log('Loaded apps:', this.apps.data);
     } catch (error) {
       console.error('Failed to load apps:', error);
       // TODO: Show error message to user
