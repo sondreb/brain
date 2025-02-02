@@ -6,6 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { App } from '../../models/api.models';
+import { ApiService } from '../../services/api.service';
+import { AppFormDialogComponent } from '../../components/app-form-dialog.component';
 
 @Component({
   selector: 'app-apps',
@@ -76,21 +78,74 @@ export class AppsComponent implements OnInit {
   apps: App[] = [];
   displayedColumns = ['name', 'description', 'actions'];
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private apiService: ApiService
+  ) {}
 
-  ngOnInit() {
-    // TODO: Load apps from service
+  async ngOnInit() {
+    await this.loadApps();
   }
 
-  createApp() {
-    // TODO: Open dialog with AppFormComponent
+  private async loadApps() {
+    try {
+      this.apps = await this.apiService.getApps();
+      console.log('Loaded apps:', this.apps);
+    } catch (error) {
+      console.error('Failed to load apps:', error);
+      // TODO: Show error message to user
+    }
   }
 
-  editApp(app: App) {
-    // TODO: Open dialog with AppFormComponent
+  async createApp() {
+    const dialogRef = this.dialog.open(AppFormDialogComponent);
+    
+    const result = await dialogRef.afterClosed().toPromise();
+    if (result) {
+      try {
+        console.log('Creating app:', result);
+        await this.apiService.createApp(result);
+        await this.loadApps();
+      } catch (error) {
+        console.error('Failed to create app:', error);
+        // TODO: Show error message to user
+      }
+    }
   }
 
-  deleteApp(app: App) {
-    // TODO: Show confirmation dialog and delete
+  async editApp(app: App) {
+    const dialogRef = this.dialog.open(AppFormDialogComponent, {
+      data: app
+    });
+    
+    const result = await dialogRef.afterClosed().toPromise();
+    if (result) {
+      try {
+        await this.apiService.updateApp(app.id, result);
+        await this.loadApps();
+      } catch (error) {
+        console.error('Failed to update app:', error);
+        // TODO: Show error message to user
+      }
+    }
+  }
+
+  async deleteApp(app: App) {
+    const confirmDelete = await this.dialog.open(MatDialog, {
+      data: {
+        title: 'Confirm Delete',
+        message: `Are you sure you want to delete ${app.name}?`
+      }
+    }).afterClosed().toPromise();
+
+    if (confirmDelete) {
+      try {
+        await this.apiService.deleteApp(app.id);
+        await this.loadApps();
+      } catch (error) {
+        console.error('Failed to delete app:', error);
+        // TODO: Show error message to user
+      }
+    }
   }
 }

@@ -7,12 +7,16 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   const { name, description, version } = req.body;
 
+  console.log(req.body);
+
   try {
     const newApp = new App({
       name,
       description,
       version
     });
+
+    console.log(newApp);
 
     const app = await newApp.save();
     res.json(app);
