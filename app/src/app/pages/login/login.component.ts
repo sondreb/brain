@@ -89,9 +89,7 @@ export class LoginComponent {
 
   async ngOnInit() {
     try {
-      debugger;
       const version = await this.apiService.getVersion();
-      debugger;
       console.log('API Version:', version);
     } catch (error) {
       console.error('Error:', error);

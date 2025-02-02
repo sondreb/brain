@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ApiResponse, App, User, VersionInfo } from '../models/api.models';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
-    private baseUrl = '/api';
+    private baseUrl = environment.apiUrl;
 
     private async fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
         const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -16,8 +17,6 @@ export class ApiService {
             },
         });
 
-        debugger;
-        
         if (!response.ok) {
             throw new Error(`API Error: ${response.statusText}`);
         }
